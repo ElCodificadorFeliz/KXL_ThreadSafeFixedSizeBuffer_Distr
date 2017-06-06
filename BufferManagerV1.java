@@ -5,7 +5,7 @@ package about_11to12_FixedSizeThreadSafeBufferManager_Distr;
  *------------------------------------------------------------------------------
  * VCS: git@BitBucket.org:schaefers/Prg_Px_K-L_FixedSizeThreadSafeBufferManager_Distr[.git]
  * For further information see ReadMe.txt
- *                                                Michael Schaefers  2017/06/05
+ *                                                Michael Schaefers  2017/06/06
  *------------------------------------------------------------------------------
  */
 public class BufferManagerV1<T> implements BufferManager<T> {
