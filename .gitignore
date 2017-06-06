@@ -1,0 +1,54 @@
+# exclude project specific stuff
+*.pdf
+
+
+
+# exclude BlueJ/project specific stuff:
+**/*.class
+**/*.ctxt
+**/doc
+
+#exclude Eclipse specific stuff (only for safety's sake - since packages shall be checked in, there shouldn't be any bin-folder)
+bin/
+
+
+
+# exclude DOS/WINDOWs specific stuff
+**/*.lnk
+
+
+
+# for safety's sake
+#==================
+#
+# OS specific:
+# exclude annoying stuff: DOSe
+"System Volume Information"
+**/Thumbs.db
+**/*.swp
+# exclude annoying stuff: Mac OS X
+**/.DS_Store
+#
+# exclude the very synchronize script (respectively "check-in" script), since problems might occur, if synchronize script checks itself in (synchronize was named check-in before)
+synchronizeWithOriginMasterBranch.bash
+
+
+
+# (re-)include
+#=============
+!ReadMe.txt
+!readme.md
+!.gitignore
+#
+# wont work, but anyway (just as checklist):
+!**/*.java
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# THE END  -  END OF SCRIPT
+#==========================
+#
+#
+#VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV

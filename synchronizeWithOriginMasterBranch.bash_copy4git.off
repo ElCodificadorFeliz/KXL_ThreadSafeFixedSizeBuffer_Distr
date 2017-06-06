@@ -1,0 +1,238 @@
+#!/bin/bash
+#----------------------------------------------------------------------------
+# JOB:              synchronize with primary centralized repository master branch
+#                   "origin" is by (GIT) convention the name of the primary centralized repository (if any)
+#----------------------------------------------------------------------------
+# RESPONSIBLE:      Schaeferes, Michael [ShfM] ( email: Michael.Schafers@Hamburg-UAS.eu )
+# KNOWN PROBLEMS:   none
+# NOTEs:            none
+# OPEN POINTS:      Should all be removed in the final version, anyway they have been
+#                   marked with: _???_<YYMMDD>  (search/grep for _???_)
+#----------------------------------------------------------------------------
+#
+# 14/05/21  v1.01   by ShfM
+# 14/10/23  v1.20   by ShfM
+#                   "PathToTheGitRealm" replaces "PortableGitOnUsbRelease"
+# 14/12/23  v2.00   by ShfM
+#                   since original got lost with stolen laptop
+#                   "PATH2SCRIPTs4GITBASH" has to be set by .../etc/profile
+# 15/03/16  v2.05   by ShfM
+#                   added some checks that "check-in" script itself is NOT checked in by script
+#                   forcing check in of copy of both "check-in" scripts
+#                   further checks added
+# 15/10/14  v2.20   by ShfM
+#                   first version after "DF97L12"/slowly dying harddisk
+# 15/12/31  v2.30   by ShfM
+#                   history cleanup 2015 ( removing notes for: v1.10/2.25/26/27 ) - "check-in" is considered as nearly final
+# 16/01/01  v2.31   by ShfM
+#                   check of "PATH2SCRIPTs4GITBASH"-variable improved
+# 16/01/05  v2.32   by ShfM
+#                   changing colors for error messages
+# 16/01/14  v3.0.0  by ShfM
+#                   former "check-in" was renamed into ...["synchronizeWithOriginMasterBranch.bash" v3.0.6]
+# 16/01/16  v3.0.7  by ShfM
+#                   history cleanup
+#
+tmpGitRepositorySynchronizeScriptVersion="v3.0.7 160116"
+#
+#----------------------------------------------------------------------------
+# PURPOSE (&usage)
+# =======
+# this script synchronizes with the remote (origin) repository.
+# it checks "everything" in (except untracked files as defined in .gitignore)
+# and updates "all" files (respectively the script does a check-out).
+# to make any sense, it is expected that:
+#   .gitignore   is well defined (since "everything" is added to the repository)
+#   origin       (the remote repository) is set
+#   branch name  the name of the (GIT-)branch you are working on
+#                is the same as defined in tmpLocalExpectedDevelopmentBranchName
+#
+#
+# copy this file into the (GIT-controlled) directory,
+# where you want to use the synchonize script and
+#
+# set the name of your development branch below as expected branch name (at the mark HERE)
+# in the current/default configuration the branch name has to be "dev"
+#
+# usage:    synchronizeWithOriginMasterBranch.bash  "check-in message"
+
+
+
+
+
+###
+### do neccessry script adaptations here
+###
+###vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+# declare your branch name             HERE
+# (it must NOT be "master")             |
+#                                      VVV
+tmpLocalExpectedDevelopmentBranchName="dev"
+#                                      ^^^
+#                                       |
+#                                      HERE
+
+
+# declare expected script version      HERE
+#                                       |
+#                       vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+tmpLocalExpectedVersion=$( cat /c/X/GIT/VERSION_CONTROL_SYNCHRONIZE_SCRIPT/gitRepositorySynchronize_version.txt )
+#                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                                       |
+#                                      HERE
+
+
+# note: PATH2SCRIPTs4GITBASH must be set in .../etc/profile
+###^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+###
+###
+
+
+
+
+
+tmpScriptName=${0##*/}
+
+# identify script itself
+#~~~~~~~~~~~~~~~~~~~~~~~
+echo ${tmpScriptName} ${tmpGitRepositorySynchronizeScriptVersion}
+
+# check scipt version
+#~~~~~~~~~~~~~~~~~~~~
+if [ "${tmpLocalExpectedVersion}"  !=  "${tmpGitRepositorySynchronizeScriptVersion}" ] ; then
+    echo -e "\e[01;33mcheck version: \"\e[01;31m${tmpLocalExpectedVersion}\e[01;33m\" was expected for synchonize (client bash script).\e[00m"
+    #    ^^! --yellow-.................---red---..........................--yellow-....................................................normal
+    exit -1
+fi
+
+
+
+
+
+# check if script itself is tracked (NEVER NEVER check in script by script itself)
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if [ 0 -ne $( git ls-files "${tmpScriptName}" | wc -w ) ] ; then
+    git  rm --cached  ${tmpScriptName}
+fi
+if [ ! -e ".gitignore" ]; then
+    echo -e "\e[01;31mATTENTION: There is NO \".gitignore\" file\e[01;36m - this might cause trouble.\e[00m"
+    #    ^^! ---red---..........................................---cyan--............................normal
+    exit -1
+fi
+if [ 0 -eq $( grep  -e "^${tmpScriptName}" .gitignore  |  wc -l ) ] ; then
+    echo -e "\e[01;31mATTENTION: It looks like \"${tmpScriptName}\" script might be tracked.\e[00m"
+    #    ^^! ---red---......................................................................normal
+    echo -e "\e[01;31mAdd  \"${tmpScriptName}\"  to \".gitignore\" file.\e[00m"
+    #    ^^! ---red---..................................................normal
+    exit -1
+fi
+
+# check parameter count
+#~~~~~~~~~~~~~~~~~~~~~~~
+if [ ${#} -lt 1 ] ; then
+    echo -e "\e[01;31mERROR: false parameter count -> ${#}\e[00m"
+    #    ^^! ---red---....................................normal
+    exit -1
+fi
+
+# check for existence of generic (core)synchronization script
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if [ -z "${PATH2SCRIPTs4GITBASH}" ]; then
+    echo -e "\e[01;31mERROR: \"PATH2SCRIPTs4GITBASH\" is NOT set properly\e[00m"
+    #    ^^! ---red---...................................................normal
+    exit -1
+fi
+if [ ! -d ${PATH2SCRIPTs4GITBASH} ]; then
+    echo -e "\e[01;31mERROR:${PATH2SCRIPTs4GITBASH} is NO directory\e[00m"
+    #    ^^! ---red---.............................................normal
+    exit -1
+fi
+if [ ! -e "${PATH2SCRIPTs4GITBASH}/gitRepositorySynchronizationCore.bash" ]; then
+    echo -e "\e[01;31mERROR: ${PATH2SCRIPTs4GITBASH}/gitRepositorySynchronizationCore.bash missing\e[00m"
+    #    ^^! ---red---.......................................................normal
+    exit -1
+fi
+
+
+
+
+
+# always check-in snychronize-scripts as ".off"-files
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cp  "${tmpScriptName}"  "${tmpScriptName}_copy4git.off"
+cp  "${PATH2SCRIPTs4GITBASH}/gitRepositorySynchronizationCore.bash"  "gitRepositorySynchronizationCore.bash_copy4git.off"
+chmod  644  "${tmpScriptName}_copy4git.off"                                     # potential access right problem: "win10<->bash"  resulting in ignored chmod command
+chmod  644  "gitRepositorySynchronizationCore.bash_copy4git.off"                # potential access right problem: "win10<->bash"  resulting in ignored chmod command
+git add -f "${tmpScriptName}_copy4git.off"
+git add -f "gitRepositorySynchronizationCore.bash_copy4git.off"
+
+
+
+echo -e "\e[00;33musing script :  \"${PATH2SCRIPTs4GITBASH}/gitRepositorySynchronizationCore.bash\"\e[00m"
+#    ^^! --brown--............................................................normal
+#
+"${PATH2SCRIPTs4GITBASH}/gitRepositorySynchronizationCore.bash"    "${PWD}"   "${tmpLocalExpectedDevelopmentBranchName}"   "${*}"
+
+
+
+exit 0
+
+###
+###  THE END
+###  =======
+###
+#############################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
+###
+###  TRASH
+###
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# http://stackoverflow.com/questions/6919121/why-are-there-2-ways-to-unstage-a-file-in-git
+# git rm --cached
+# git reset HEAD file
+
+
+
+#############################################################################
+#############################################################################
+#############################################################################
+###
+###  NOTEs
+###
+#
+# first of all / before using synchronize:
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# git init
+# git remote add origin git@BitBucket.org:<BBuser>/...[.git]
+# git add readme.md
+# git commit -m "initial check-in"
+# git push --tags -u origin master
+# git branch dev
+# git checkout dev
+# synchronize "message"
