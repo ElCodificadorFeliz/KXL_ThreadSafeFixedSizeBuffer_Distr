@@ -22,8 +22,8 @@ public interface BufferManager<T> {
      * 
      * @param data - der einzuf&uuml;gende Datensatz
      * 
-     * @throws InterruptedException falls der als Parameter &uuml;bergebene Datensatz <b><code>null</code></b> ist.
-     * @throws NullPointerException falls eine Unterbrechung per Interrupt beim blockierenden Warten erfolgt.
+     * @throws InterruptedException falls eine Unterbrechung per Interrupt beim blockierenden Warten erfolgt.
+     * @throws NullPointerException falls der als Parameter &uuml;bergebene Datensatz <b><code>null</code></b> ist.
      */
     public abstract void insert( final T data ) throws InterruptedException;
     
@@ -33,7 +33,7 @@ public interface BufferManager<T> {
      * 
      * @return der &auml;lteste Datensatz im Puffer
      * 
-     * @throws InterruptedException falls der als Parameter &uuml;bergebene Datensatz <b><code>null</code></b> ist.
+     * @throws InterruptedException falls eine Unterbrechung per Interrupt beim blockierenden Warten erfolgt.
      */
     public abstract T remove() throws InterruptedException;
     
