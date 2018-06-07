@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /*
  *------------------------------------------------------------------------------
- * VCS: git@BitBucket.org:schaefers/Prg_Px_K-L_FixedSizeThreadSafeBufferManager_Distr[.git]
+ * VCS: git@BitBucket.org:schaefers/Prg_Px_J-L_FixedSizeThreadSafeBufferManager_Distr[.git]
  * For further information see ReadMe.txt
  *                                                Michael Schaefers  2017/06/06
  *------------------------------------------------------------------------------
