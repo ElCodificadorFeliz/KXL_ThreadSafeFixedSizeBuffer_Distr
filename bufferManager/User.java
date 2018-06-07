@@ -1,7 +1,9 @@
 package bufferManager;
 
+
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
 
 /*
  *------------------------------------------------------------------------------
@@ -20,7 +22,7 @@ public class User implements Runnable {
                 final long data = bm.remove();
                 if( -1L == data ){
                     //\=> "death pill taken"
-                    Herald.proclaimDeath();
+                    Herald.proclaimComingDeathOfExecutingThread();
                     return;
                 }
                 //
@@ -29,7 +31,7 @@ public class User implements Runnable {
                 //
                 // TODO
             }catch( final InterruptedException ex ){
-                Herald.proclaimDeath();
+                Herald.proclaimComingDeathOfExecutingThread();
                 return;
             }//try
         }//while

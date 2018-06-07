@@ -53,6 +53,7 @@ public class TestFrame {
         
         try{
             TimeUnit.SECONDS.sleep( 10 );
+            Herald.proclaim( "Starting shutdown\n" );
             
             
             for( int i=0; i<numberOfMakers; i++ ){
@@ -67,7 +68,7 @@ public class TestFrame {
                 user[i].join();
             }//for
             
-            Herald.proclaimDeath();
+            Herald.proclaimComingDeathOfExecutingThread();;
             System.out.printf( "THE END" );
             System.out.flush();
         }catch( InterruptedException ex ){

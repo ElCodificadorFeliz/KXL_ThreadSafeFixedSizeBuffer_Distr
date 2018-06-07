@@ -27,7 +27,7 @@ public class Maker implements Runnable {
                 //
                 bm.insert(data);
             }catch( final InterruptedException ex ){
-                Herald.proclaimDeath();
+                Herald.proclaimComingDeathOfExecutingThread();;
                 return;
             }//try
         }//while

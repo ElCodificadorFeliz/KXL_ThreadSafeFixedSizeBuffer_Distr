@@ -10,7 +10,7 @@ package bufferManager;
  */
 public class Herald {
     
-    public static void proclaimDeath(){
+    public static void proclaimComingDeathOfExecutingThread(){
         final StringBuffer sb = new StringBuffer( "" );
         sb.append(
             String.format(
@@ -19,8 +19,13 @@ public class Herald {
                 Thread.currentThread().getName()
             )
         );
+        proclaim( sb.toString() );
+    }//method()
+    
+    public static void proclaim( final String message ){
+        System.err.flush();
         System.out.flush();
-        System.out.printf( "%s\n",  sb.toString() );
+        System.out.print( message );
         System.out.flush();
     }//method()
     
