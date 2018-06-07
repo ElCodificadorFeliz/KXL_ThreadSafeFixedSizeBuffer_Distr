@@ -1,4 +1,4 @@
-package about_11to12_FixedSizeThreadSafeBufferManager_Distr;
+package bufferManager;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
