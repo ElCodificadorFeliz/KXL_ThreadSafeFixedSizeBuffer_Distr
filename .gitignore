@@ -1,10 +1,21 @@
-# .gitignore for Java using Eclipse
-# =================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+# Character encoding related QUICK-TEST-LINE: [Ä]=(Ae),[Ö]=(Oe),[Ü]=(Ue),[ä]=(ae),[ö]=(oe),[ü]=ue,[ß]=(szet)            |
+########################################################################################################################|<-121
+###                                                                                                                     V
+###
+###
+###
+###             .gitignore for Java-SE using Eclipse
+###             ####################################
+###
+###
+###############################################################################
 #
-# author    Michael Schaefers ;  Px@Hamburg-UAS.eu
-# version   2018/04/11           (2018/06/07, 2018/05/17, 2018/03/29, 2017/11/05) 
 #
-
+#   version :   2020/12/06              basiert auf (2020/04/03, 2018/04/11, 2018/06/07, 2018/05/17, 2018/03/29, 2017/11/05, 2017/10/02) 
+#   author :    Michael Schaefers       [UTF8]: Michael Schäfers ;  Px@Hamburg-UAS.eu
+#
+###############################################################################
 
 
 
@@ -22,8 +33,9 @@
 ### (re)include wanted stuff (this is done recursively as result of "!*\")
 ###=========================
 ###
-
+#
 # (re)include explizit stuff (recursively as result of "!*\")
+
 !.gitignore
 
 !readme.md
@@ -37,33 +49,39 @@
 
 
 ###
-### exclude for safety's sake
+### exclude for safety's sake  -  NOT needed  if everything was excluded before
 ###==========================
 ###
-#
-# NOT needed  if everything was excluded before
-#
-#
+
 # exclude OS specific stuff:
 #---------------------------
+#
 # exclude annoying stuff: DOSe
 "System Volume Information"
 **/Thumbs.db
 **/*.swp
+#
 # exclude annoying stuff: Mac OS X
 **/.DS_Store
-#
+
 # exclude BlueJ/project specific stuff:
 #--------------------------------------
 **/*.class
 **/*.ctxt
 **/doc
 **/package.bluej
-#
-#
+
+# exclude ObjectAid specific stuff:
+#----------------------------------
+**/*.ucls
+**/*.gif
+**/*.jpg
+**/*.jpeg
+**/*.png
+
+
 # exclude the very synchronize script (respectively "check-in" script), since problems might occur, if synchronize script checks itself in (synchronize was named check-in before)
 synchronizeWithOriginMasterBranch.bash
-check-in
 
 
 
@@ -75,12 +93,13 @@ check-in
 #==========================
 #
 #
-# Unfortunately,
+# Remember, unfortunately
+#
 #->     *                       # wont work part1 :'-(
 #->     !**/wantedFile          # wont work part2 :'-(
 # is not working - you can NOT (re)include files in directories this way
 #
-# the workaround (see above) is still under test
+# the workaround (see above) is working fine
 #
 #
 #

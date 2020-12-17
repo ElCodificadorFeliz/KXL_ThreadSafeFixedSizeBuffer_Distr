@@ -1,1 +1,1 @@
-P2 SS18 Aufgabenzettel#4 A5 (TI) Fixed Size ThreadSafe Buffer Manager
+P2 S20W Aufgabenzettel#4 A5 (ITS) ThreadSafe Fixed Size Buffer Manager
