@@ -3,14 +3,15 @@ package bufferManager;
 
 /*
  *------------------------------------------------------------------------------
- * VCS: git@BitBucket.org:schaefers/Prg_Px_J-L_FixedSizeThreadSafeBufferManager_Distr[.git]
+ * VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/KXL_ThreadSafeFixedSizeBuffer_Distr[.git]
  * For further information see ReadMe.txt
- *                                                Michael Schaefers  2017/06/06
+ *                                                Michael Schaefers  2021/01/21
  *------------------------------------------------------------------------------
  */
-public class BufferManagerV1<T> implements BufferManager<T> {
+public class TemplateStub2<T> implements BufferManager<T> {
+// TemplateStub2 ist ein sehr schlechter Name - es ist Ihre Aufgabe einen besseren zu finden, sofern Sie dieses Template verwenden
     
-    public BufferManagerV1( final int capacity ){
+    public TemplateStub2( final int capacity ){
         // TODO
     }//constructor()
     

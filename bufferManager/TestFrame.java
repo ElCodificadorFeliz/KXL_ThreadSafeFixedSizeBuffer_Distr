@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /*
  *------------------------------------------------------------------------------
- * VCS: git@BitBucket.org:schaefers/Prg_Px_J-L_FixedSizeThreadSafeBufferManager_Distr[.git]
+ * VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/KXL_ThreadSafeFixedSizeBuffer_Distr[.git]
  * For further information see ReadMe.txt
- *                                                Michael Schaefers  2017/06/06
+ *                                                Michael Schaefers  2021/01/21
  *------------------------------------------------------------------------------
  */
 public class TestFrame {
@@ -34,7 +34,7 @@ public class TestFrame {
         final Thread[] maker = new Thread[numberOfMakers];
         final Thread[] user = new Thread[numberOfUsers];
         
-        final BufferManager<Long> bm = new BufferManagerV1<Long>( capacity );
+        final BufferManager<Long> bm = new TemplateStub1<Long>( capacity );
         final AtomicLong counter = new AtomicLong( 0 );
         
         
@@ -53,7 +53,7 @@ public class TestFrame {
         
         try{
             TimeUnit.SECONDS.sleep( 10 );
-            Herald.proclaim( "Starting shutdown\n" );
+            Herald.proclaimMessage( "Starting shutdown\n" );
             
             
             for( int i=0; i<numberOfMakers; i++ ){
@@ -68,7 +68,7 @@ public class TestFrame {
                 user[i].join();
             }//for
             
-            Herald.proclaimComingDeathOfExecutingThread();;
+            Herald.proclaimComingDeathOfExecutingThread();
             System.out.printf( "THE END" );
             System.out.flush();
         }catch( InterruptedException ex ){

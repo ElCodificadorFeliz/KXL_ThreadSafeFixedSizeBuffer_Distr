@@ -3,9 +3,9 @@ package bufferManager;
 
 /*
  *------------------------------------------------------------------------------
- * VCS: git@BitBucket.org:schaefers/Prg_Px_J-L_FixedSizeThreadSafeBufferManager_Distr[.git]
+ * VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/KXL_ThreadSafeFixedSizeBuffer_Distr[.git]
  * For further information see ReadMe.txt
- *                                                Michael Schaefers  2017/06/06
+ *                                                Michael Schaefers  2021/01/21
  *------------------------------------------------------------------------------
  */
 /**

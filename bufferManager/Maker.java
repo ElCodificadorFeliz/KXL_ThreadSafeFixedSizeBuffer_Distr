@@ -8,30 +8,15 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /*
  *------------------------------------------------------------------------------
- * VCS: git@BitBucket.org:schaefers/Prg_Px_J-L_FixedSizeThreadSafeBufferManager_Distr[.git]
+ * VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/KXL_ThreadSafeFixedSizeBuffer_Distr[.git]
  * For further information see ReadMe.txt
- *                                                Michael Schaefers  2017/06/06
+ *                                                Michael Schaefers  2021/01/21
  *------------------------------------------------------------------------------
  */
 public class Maker implements Runnable {
     
-    @Override
-    public void run(){
-        final Random randomGenerator = new Random();
-        while( ! Thread.interrupted() ){
-            try{
-                final long data = counter.getAndIncrement();
-                //
-                final int randomDelay = 20 + randomGenerator.nextInt( 90 );
-                TimeUnit.MILLISECONDS.sleep( randomDelay );
-                //
-                bm.insert(data);
-            }catch( final InterruptedException ex ){
-                Herald.proclaimComingDeathOfExecutingThread();;
-                return;
-            }//try
-        }//while
-    }//method()
+    final BufferManager<Long> bm;
+    final AtomicLong counter;
     
     
     
@@ -42,7 +27,32 @@ public class Maker implements Runnable {
     
     
     
-    final BufferManager<Long> bm;
-    final AtomicLong counter;
+    @Override
+    public void run(){
+        final Random randomGenerator = new Random();
+        try{
+            while( ! Thread.interrupted() ){
+                final long data = counter.getAndIncrement();
+                //
+                final int randomDelay = 20 + randomGenerator.nextInt( 90 );
+                TimeUnit.MILLISECONDS.sleep( randomDelay );
+                //
+                bm.insert(data);
+            }//while
+        }catch( final InterruptedException ex ){
+            final Thread executingThread = Thread.currentThread();              // thread that executes this very code
+            final StringBuilder sb = new StringBuilder();                       // (thread) local -> hence StringBuffer is NOT required
+            sb.append(
+                String.format(
+                    "%d:%s received interrupt\n",
+                    executingThread.getId(),
+                    executingThread.getName()
+                )
+            );
+            Herald.proclaimMessage( sb );
+        }finally{
+            Herald.proclaimComingDeathOfExecutingThread();
+        }//try            
+    }//method()
     
 }//class
