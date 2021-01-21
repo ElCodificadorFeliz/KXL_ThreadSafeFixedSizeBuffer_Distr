@@ -32,24 +32,15 @@ public class User implements Runnable {
                 final long data = bm.remove();
                 if( -1L == data ){
                     //\=> "death pill taken"
-                    Herald.proclaimComingDeathOfExecutingThread();
+                    Herald.proclaimExecutingThreadInformation( "took death pill" );
                     return;
-                }
+                }//if
                 //
                 final int randomDelay = 20 + randomGenerator.nextInt( 90 );
                 TimeUnit.MILLISECONDS.sleep( randomDelay );
             }//while
         }catch( final InterruptedException ex ){
-            final Thread executingThread = Thread.currentThread();              // thread that executes this very code
-            final StringBuilder sb = new StringBuilder();                       // (thread) local -> hence StringBuffer is NOT required
-            sb.append(
-                String.format(
-                    "%d:%s received interrupt\n",
-                    executingThread.getId(),
-                    executingThread.getName()
-                )
-            );
-            Herald.proclaimMessage( sb );
+            Herald.proclaimExecutingThreadInformation( "received interrupt" );
         }finally{
             Herald.proclaimComingDeathOfExecutingThread();
         }//try  

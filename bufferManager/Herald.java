@@ -16,20 +16,25 @@ import java.io.Serializable;
  */
 public class Herald implements Serializable {
     //                                           #__version__YYYY_MM_DD__xxxL   // #__<global-version>__<local/daily-version>      
-    static final private long serialVersionUID = 1__0001001__2021_01_21__001L;  // leading 1 to avoid octal system - 7 digits left, should be enough
+    static final private long serialVersionUID = 1__0001001__2021_01_21__002L;  // leading 1 to avoid octal system - 7 digits left, should be enough
     
     
     
     
     
     public static void proclaimComingDeathOfExecutingThread(){
+        proclaimExecutingThreadInformation( "is going down" );
+    }//method()
+    //
+    public static void proclaimExecutingThreadInformation( final String information ){
         final Thread executingThread = Thread.currentThread();                  // thread that executes this very code
         final StringBuilder sb = new StringBuilder();                           // (thread) local -> hence StringBuffer is NOT required
         sb.append(
             String.format(
-                "%d:%s is going down\n",
+                "%d:%s %s\n",
                 executingThread.getId(),
-                executingThread.getName()
+                executingThread.getName(),
+                information
             )
         );
         proclaimMessage( sb );

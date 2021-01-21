@@ -40,16 +40,7 @@ public class Maker implements Runnable {
                 bm.insert(data);
             }//while
         }catch( final InterruptedException ex ){
-            final Thread executingThread = Thread.currentThread();              // thread that executes this very code
-            final StringBuilder sb = new StringBuilder();                       // (thread) local -> hence StringBuffer is NOT required
-            sb.append(
-                String.format(
-                    "%d:%s received interrupt\n",
-                    executingThread.getId(),
-                    executingThread.getName()
-                )
-            );
-            Herald.proclaimMessage( sb );
+            Herald.proclaimExecutingThreadInformation( "received interrupt" );
         }finally{
             Herald.proclaimComingDeathOfExecutingThread();
         }//try            

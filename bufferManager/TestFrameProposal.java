@@ -8,11 +8,19 @@ import java.util.concurrent.atomic.AtomicLong;
 /*
  *------------------------------------------------------------------------------
  * VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/KXL_ThreadSafeFixedSizeBuffer_Distr[.git]
+ * 
+ * Dieser TestFrame ist nur ein Vorschlag bzw. eine Art mögliches Template für
+ * Ihre Testumgebung. gern können Sie eine eigene TestUmgebung entwickeln.
+ * (Die dann aber auch ausreichend testet.)
+ * 
+ * Sollten Sie diesen Testframe verwenden, beachten Sie, dass sie diesem um
+ * weitere Tests erweitern müssen. Dieser TestFrame lässt Dinge ungestestet.
+ * 
  * For further information see ReadMe.txt
  *                                                Michael Schaefers  2021/01/21
  *------------------------------------------------------------------------------
  */
-public class TestFrame {
+public class TestFrameProposal {
     
     public static void main( final String... unused ){
         
@@ -21,9 +29,9 @@ public class TestFrame {
         //  SETUP
         //  =====
         //
-        final int capacity = 4;
-        final int numberOfMakers = 10;
-        final int numberOfUsers = 10;
+        final int capacity = 5;
+        final int numberOfMakers = 13;
+        final int numberOfUsers = 13;
         
         
         
@@ -34,7 +42,7 @@ public class TestFrame {
         final Thread[] maker = new Thread[numberOfMakers];
         final Thread[] user = new Thread[numberOfUsers];
         
-        final BufferManager<Long> bm = new TemplateStub1<Long>( capacity );
+        final BufferManager<Long> bm = new SolutionWrapper<Long>( capacity );
         final AtomicLong counter = new AtomicLong( 0 );
         
         
@@ -69,8 +77,6 @@ public class TestFrame {
             }//for
             
             Herald.proclaimComingDeathOfExecutingThread();
-            System.out.printf( "THE END" );
-            System.out.flush();
         }catch( InterruptedException ex ){
             ex.printStackTrace();
         }//try
