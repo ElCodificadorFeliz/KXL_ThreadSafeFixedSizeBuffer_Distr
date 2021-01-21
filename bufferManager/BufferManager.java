@@ -28,7 +28,7 @@ public interface BufferManager<T> {
     public abstract void insert( final T data ) throws InterruptedException;
     
     /**
-     * Liefert und entfernt den &auml;testen Datensatz im Puffer.
+     * Liefert und entfernt den &auml;ltesten Datensatz im Puffer.
      * Sofern kein Datensatz im Puffer vorhanden ist, wird blockierend gewartet bis ein Datensatz verf&uuml;gbar ist.
      * 
      * @return der &auml;lteste Datensatz im Puffer
@@ -52,7 +52,7 @@ public interface BufferManager<T> {
     public abstract int getRemainingCapacity();
     
     /**
-     * Liefert den zur Verf&uuml;gung stehenden Platz im Puffer bzw. die macimale Anzahl Datens&auml;tze, die der Puffer aufnehmen kann. 
+     * Liefert den zur Verf&uuml;gung stehenden Platz im Puffer bzw. die maximale Anzahl Datens&auml;tze, die der Puffer aufnehmen kann. 
      * 
      * @return die Anzahl Datens&auml;tze, die der Puffer maximal aufnehmen kann
      */
