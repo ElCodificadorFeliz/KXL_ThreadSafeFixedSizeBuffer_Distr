@@ -7,6 +7,8 @@ public class SolutionWrapper<T> implements BufferManager<T> {
     
     
     
+    
+    
     public SolutionWrapper( final int capacity ){
         final int selectedImplemantation = 1;
         //
@@ -16,6 +18,8 @@ public class SolutionWrapper<T> implements BufferManager<T> {
             default: assert false : "implementation does NOT exist";
         }//switch
     }//constructor()
+    
+    
     
     
     
