@@ -11,9 +11,15 @@ package bufferManager;
 public class TemplateStub1<T> implements BufferManager<T> {
 // TemplateStub1 ist ein sehr schlechter Name - es ist Ihre Aufgabe einen besseren zu finden, sofern Sie dieses Template verwenden
     
+    
+    
+    
+    
     public TemplateStub1( final int capacity ){
         // TODO
     }//constructor()
+    
+    
     
     
     
