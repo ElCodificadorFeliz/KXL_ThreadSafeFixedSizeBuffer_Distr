@@ -99,7 +99,7 @@ public class UnitTestProposal {
     
     
     @Test
-    public void testStartAndShutDownCausesCrashes(){
+    public void testForCrashingThreadsDuringStartAndShutDown(){
         final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTimeoutPreemptively(
             Duration.ofMillis( 20_000 ),
@@ -175,7 +175,7 @@ public class UnitTestProposal {
                             maker[i].join();
                         }//for
                         for( int i=0; i<numberOfUsers; i++ ){
-                            bm.insert( -1L );                                               // insert death pill
+                            bm.insert( -1L );                                   // <- white box test :  insert death pill
                         }//for
                         for( int i=0; i<numberOfUsers; i++ ){
                             user[i].join();
