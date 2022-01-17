@@ -5,6 +5,8 @@ package bufferManager;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import untouchableSupportStuff.EnvironmentAnalyzer;
+import untouchableSupportStuff.GivenCodeVersion;
 import untouchableSupportStuff.Herald;
 
 
@@ -34,6 +36,19 @@ public class TestFrameProposal {
     
     
     public static void main( final String... unused ){
+        // print test frame version
+        System.out.printf( "Given code version:     %s\n",   GivenCodeVersion.getDecodedVersion() );
+        // print some informations about environment
+        System.out.printf( "Environment:\n" );
+        System.out.printf( "    Java:               %s\n",  EnvironmentAnalyzer.getJavaVersion() );
+        System.out.printf( "    JUnit5/Jupiter:     %s\n",  EnvironmentAnalyzer.getJUnitJupiterVersion() );
+        System.out.printf( "    JUnit5/Platform:    %s\n",  EnvironmentAnalyzer.getJUnitPlatformVersion() );
+        System.out.printf( "    #Cores:             %d\n",  EnvironmentAnalyzer.getAvailableCores() );
+        System.out.printf( "==================================\n" );
+        System.out.printf( "\n\n" );
+        System.out.flush();
+        
+        
         
         //
         //
