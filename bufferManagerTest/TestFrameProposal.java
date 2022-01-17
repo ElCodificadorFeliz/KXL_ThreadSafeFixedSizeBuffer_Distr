@@ -1,12 +1,17 @@
 // This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
-package bufferManager;
+package bufferManagerTest;
 
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-
+//
+import bufferManagerImplementation.BufferManager;
+import bufferManagerImplementation.Maker;
+import bufferManagerImplementation.SolutionWrapper;
+import bufferManagerImplementation.User;
+import bufferManagerVersion.GivenCodeVersion;
+//
 import untouchableSupportStuff.EnvironmentAnalyzer;
-import untouchableSupportStuff.GivenCodeVersion;
 import untouchableSupportStuff.Herald;
 
 

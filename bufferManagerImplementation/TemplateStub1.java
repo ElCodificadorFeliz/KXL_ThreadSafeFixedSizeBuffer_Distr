@@ -1,5 +1,5 @@
 // This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
-package bufferManager;
+package bufferManagerImplementation;
 
 
 //TemplateStub1 ist ein sehr schlechter Name - es ist Ihre Aufgabe einen besseren zu finden, sofern Sie dieses Template verwenden

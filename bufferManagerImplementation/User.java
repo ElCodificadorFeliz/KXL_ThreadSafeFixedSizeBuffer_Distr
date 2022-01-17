@@ -1,21 +1,20 @@
 // This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
-package bufferManager;
+package bufferManagerImplementation;
 
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 import untouchableSupportStuff.Herald;
 
 
 /**
- * Maker/Task: For information see ReadMe.txt resp. task
+ * User/Task: For information see ReadMe.txt resp. task
  * 
  * @version {@value #encodedVersion}
  * @author  Michael Schäfers ;  P2@Hamburg-UAS.eu  
  */
-public class Maker implements Runnable {
+public class User implements Runnable {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                               #___~version~___YYYY_MM_DD__dd_
@@ -24,14 +23,12 @@ public class Maker implements Runnable {
     
     
     
-    final BufferManager<Long> bm;
-    final AtomicLong counter;
+    private final BufferManager<Long> bm;
     
     
     
-    public Maker( final BufferManager<Long> bm,  final AtomicLong counter ){
+    public User( final BufferManager<Long> bm ){
         this.bm = bm;
-        this.counter = counter;
     }//constructor()
     
     
@@ -41,18 +38,21 @@ public class Maker implements Runnable {
         final Random randomGenerator = new Random();
         try{
             while( ! Thread.interrupted() ){
-                final long data = counter.getAndIncrement();
+                final long data = bm.remove();
+                if( -1L == data ){
+                    //\=> "death pill taken"
+                    Herald.proclaimExecutingThreadInformation( "took death pill" );
+                    return;
+                }//if
                 //
                 final int randomDelay = 20 + randomGenerator.nextInt( 90 );
                 TimeUnit.MILLISECONDS.sleep( randomDelay );
-                //
-                bm.insert(data);
             }//while
         }catch( final InterruptedException ex ){
             Herald.proclaimExecutingThreadInformation( "received interrupt" );
         }finally{
             Herald.proclaimComingDeathOfExecutingThread();
-        }//try            
+        }//try  
     }//method()
     
 }//class
