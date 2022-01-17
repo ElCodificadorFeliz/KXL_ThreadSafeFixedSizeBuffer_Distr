@@ -1,15 +1,20 @@
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
 package bufferManager;
 
 
-/*
- *------------------------------------------------------------------------------
- * VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/KXL_ThreadSafeFixedSizeBuffer_Distr[.git]
- * For further information see ReadMe.txt
- *                                                Michael Schaefers  2021/01/21
- *------------------------------------------------------------------------------
+//TemplateStub2 ist ein sehr schlechter Name - es ist Ihre Aufgabe einen besseren zu finden, sofern Sie dieses Template verwenden
+/**
+ * Task: For information see task
+ * 
+ * @version {@value #encodedVersion}
+ * @author  Michael Schäfers ;  P2@Hamburg-UAS.eu 
  */
 public class TemplateStub2<T> implements BufferManager<T> {
-// TemplateStub2 ist ein sehr schlechter Name - es ist Ihre Aufgabe einen besseren zu finden, sofern Sie dieses Template verwenden
+    //
+    //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                               #___~version~___YYYY_MM_DD__dd_
+    final static private long encodedVersion = 2___00001_001___2022_01_13__01L;
+    //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
     
     
     

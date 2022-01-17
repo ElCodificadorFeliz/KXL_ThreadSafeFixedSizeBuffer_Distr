@@ -1,26 +1,37 @@
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
 package bufferManager;
 
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import untouchableSupportStuff.Herald;
 
-/*
- *------------------------------------------------------------------------------
- * VCS: git@git.HAW-Hamburg.de:shf/Px/LabExercise/KXL_ThreadSafeFixedSizeBuffer_Distr[.git]
- * 
- * Dieser TestFrame ist nur ein Vorschlag bzw. eine Art mögliches Template für
- * Ihre Testumgebung. gern können Sie eine eigene TestUmgebung entwickeln.
- * (Die dann aber auch ausreichend testet.)
+
+/**
+ * Dieser TestFrame ist nur ein Vorschlag bzw. eine Art mögliches Template
+ * für Ihre Testumgebung. Es ist also eher eine Anregung als ein Test
+ * bzw. für einen ernstzunehmenden Test wird unzureichend getestet.
+ * Gern können Sie eine eigene TestUmgebung entwickeln. (Die dann aber auch
+ * ausreichend testet.)
  * 
  * Sollten Sie diesen Testframe verwenden, beachten Sie, dass sie diesem um
  * weitere Tests erweitern müssen. Dieser TestFrame lässt Dinge ungestestet.
  * 
  * For further information see ReadMe.txt
- *                                                Michael Schaefers  2021/01/21
- *------------------------------------------------------------------------------
+ * 
+ * 
+ * @version {@value #encodedVersion}
+ * @author  Michael Schäfers ;  P2@Hamburg-UAS.eu  
  */
 public class TestFrameProposal {
+    //
+    //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                               #___~version~___YYYY_MM_DD__dd_
+    final static private long encodedVersion = 2___00001_001___2022_01_16__01L;
+    //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
+    
+    
     
     public static void main( final String... unused ){
         
@@ -70,7 +81,7 @@ public class TestFrameProposal {
             }//for
             
             for( int i=0; i<numberOfUsers; i++ ){
-                bm.insert( -1L );
+                bm.insert( -1L );                                               // insert death pill
             }//for
             for( int i=0; i<numberOfUsers; i++ ){
                 user[i].join();

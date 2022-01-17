@@ -1,22 +1,26 @@
-package bufferManager;
+// This source code is UTF-8 coded - see https://stackoverflow.com/questions/9180981/how-to-support-utf-8-encoding-in-eclipse
+package untouchableSupportStuff;
 
 
 import java.io.Serializable;
 
 
-/*
- *------------------------------------------------------------------------------
- * Herald
- *
- * "Home"-VCS:  git@git.HAW-Hamburg.de:shf/Px/LabExercise/ZZZ_SupportStuff[.git]
+/**
+ * Herald prints message on screen. 
  * 
- * Author:      Michael Schaefers ([UTF-8]:"Michael Schäfers");  javaCode@Hamburg-UAS.eu
- * Version:     2021/01/21  ->  see serialVersionUID
- *------------------------------------------------------------------------------
+ * @version {@value #encodedVersion}
+ * @author  Michael Schäfers ;  Px@Hamburg-UAS.eu  
  */
 public class Herald implements Serializable {
-    //                                           #__version__YYYY_MM_DD__xxxL   // #__<global-version>__<local/daily-version>      
-    static final private long serialVersionUID = 1__0001001__2021_01_21__002L;  // leading 1 to avoid octal system - 7 digits left, should be enough
+    //
+    //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
+    //  ========                               #___~version~___YYYY_MM_DD__dd_
+    final static private long encodedVersion = 2___00001_001___2022_01_16__01L;
+    //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
+    final static private Version version = new Version( encodedVersion );
+    static public String getDecodedVersion(){ return version.getDecodedVersion(); }
+    //
+    static final private long serialVersionUID = version.getVersionNumber();
     
     
     
