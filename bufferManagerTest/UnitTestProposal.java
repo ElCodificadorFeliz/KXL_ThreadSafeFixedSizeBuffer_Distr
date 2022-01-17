@@ -29,7 +29,17 @@ import untouchableSupportStuff.Version;
 
 
 /**
- * ...
+ * Dieser JUnit(5)-TestFrame ist nur ein Vorschlag bzw. eine Art mögliches
+ * Template für Ihre Testumgebung. Es ist also eher eine Anregung als ein Test
+ * bzw. für einen ernstzunehmenden Test wird unzureichend getestet.
+ * Gern können Sie eine eigene TestUmgebung entwickeln. (Die dann aber auch
+ * ausreichend testet.)
+ * 
+ * Sollten Sie diesen JUnit-Testframe verwenden, beachten Sie, dass sie diesem
+ * um weitere Tests erweitern müssen. Dieser TestFrame lässt Dinge ungestestet.
+ * 
+ * For further information see ReadMe.txt
+ * 
  * 
  * @version {@value #encodedVersion}
  * @author  Michael Schäfers ;  Px@Hamburg-UAS.eu 
@@ -38,7 +48,7 @@ public class UnitTestProposal {
     //
     //--VERSION:-------------------------------#---vvvvvvvvv---vvvv-vv-vv--vv
     //  ========                               #___~version~___YYYY_MM_DD__dd_
-    final static private long encodedVersion = 2___00001_000___2022_01_17__01L;
+    final static private long encodedVersion = 2___00001_001___2022_01_17__02L;
     //-----------------------------------------#---^^^^^-^^^---^^^^-^^-^^--^^
     final static private Version version = new Version( encodedVersion );
     static public String getDecodedVersion(){ return version.getDecodedVersion(); }
@@ -48,7 +58,7 @@ public class UnitTestProposal {
     
     
     // limit for test time
-    final static private int commonDefaultLimit = 4_000;                        // timeout resp. max. number of ms for test
+    final static private int commonDefaultLimit = 4_000;                        // default value for timeout resp. max. number of ms for test
     
     
     
@@ -89,7 +99,7 @@ public class UnitTestProposal {
     
     
     @Test
-    public void testStartAndShutDownAsDemo(){
+    public void testStartAndShutDownCausesCrashes(){
         final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTimeoutPreemptively(
             Duration.ofMillis( 20_000 ),
@@ -113,7 +123,7 @@ public class UnitTestProposal {
                     //  =====
                     //
                     final AtomicInteger threadCrashCount = new AtomicInteger( 0 );
-                    class SimpleUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+                    class SimpleUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {   // Klasse, die definiert wie auf unchecked exceptions reagiert werden soll, die threads werfen
                         @Override
                         public void uncaughtException( Thread t, Throwable ex ){
                             threadCrashCount.incrementAndGet();
@@ -142,18 +152,17 @@ public class UnitTestProposal {
                     final BufferManager<Long> bm = new SolutionWrapper<Long>( capacity );
                     final AtomicLong counter = new AtomicLong( 0 );
                     
-                    
                     for( int i=0; i<numberOfMakers; i++ ){
                         maker[i] = new Thread( new Maker( bm, counter ) );
                         maker[i].setName( String.format( "Maker#%d", i ));
-                        maker[i].setUncaughtExceptionHandler( new SimpleUncaughtExceptionHandler() );
+                        maker[i].setUncaughtExceptionHandler( new SimpleUncaughtExceptionHandler() );   // define UncaughtExceptionHandler
                         maker[i].start();
                     }//for
                     
                     for( int i=0; i<numberOfUsers; i++ ){
                         user[i] = new Thread( new User( bm ) );
                         user[i].setName( String.format( "User#%d", i ));
-                        user[i].setUncaughtExceptionHandler( new SimpleUncaughtExceptionHandler() );
+                        user[i].setUncaughtExceptionHandler( new SimpleUncaughtExceptionHandler() );    // define UncaughtExceptionHandler
                         user[i].start();
                     }//for
                     
@@ -161,12 +170,10 @@ public class UnitTestProposal {
                         TimeUnit.SECONDS.sleep( 10 );
                         Herald.proclaimMessage( "Starting shutdown\n" );
                         
-                        
                         for( int i=0; i<numberOfMakers; i++ ){
                             maker[i].interrupt();
                             maker[i].join();
                         }//for
-                        
                         for( int i=0; i<numberOfUsers; i++ ){
                             bm.insert( -1L );                                               // insert death pill
                         }//for
@@ -175,7 +182,7 @@ public class UnitTestProposal {
                         }//for
                         
                         Herald.proclaimComingDeathOfExecutingThread();
-                    }catch( InterruptedException ex ){
+                    }catch( final InterruptedException ex ){
                         ex.printStackTrace();
                     }//try
                     
@@ -211,7 +218,7 @@ public class UnitTestProposal {
                     sb.append( "\n" );
                     Herald.proclaimMessage( sb );
                     
-                    // ... currently actually nothing is tested - it's your job ;-)
+                    // ... actually, there is nothing is tested currently - it's your job to implement test;-)
                     
                     // end of actual test
                     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

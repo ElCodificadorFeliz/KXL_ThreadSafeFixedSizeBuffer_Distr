@@ -48,8 +48,8 @@ public class User implements Runnable {
                 final int randomDelay = 20 + randomGenerator.nextInt( 90 );
                 TimeUnit.MILLISECONDS.sleep( randomDelay );
             }//while
-        }catch( final InterruptedException ex ){
-            Herald.proclaimExecutingThreadInformation( "received interrupt" );
+        }catch( final InterruptedException ex ){                                // zählt NICHT als crash,..
+            Herald.proclaimExecutingThreadInformation( "received interrupt" );  //..sondern ordentliche Terminierung
         }finally{
             Herald.proclaimComingDeathOfExecutingThread();
         }//try  

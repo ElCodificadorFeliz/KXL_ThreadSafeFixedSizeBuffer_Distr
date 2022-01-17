@@ -48,8 +48,8 @@ public class Maker implements Runnable {
                 //
                 bm.insert(data);
             }//while
-        }catch( final InterruptedException ex ){
-            Herald.proclaimExecutingThreadInformation( "received interrupt" );
+        }catch( final InterruptedException ex ){                                // zählt NICHT als crash,..
+            Herald.proclaimExecutingThreadInformation( "received interrupt" );  //..sondern ordentliche Terminierung
         }finally{
             Herald.proclaimComingDeathOfExecutingThread();
         }//try            
