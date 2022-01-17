@@ -66,10 +66,10 @@ public class UnitTestProposal {
     
     @BeforeAll
     public static void executeBeforeAllTests(){
-        System.out.printf( "TestFrame information\n" );
-        System.out.printf( "=====================\n" );
+        System.out.printf( "General information\n" );
+        System.out.printf( "===================\n" );
         System.out.printf( "\n\n" );
-        System.out.printf( "Release:\n" );
+        System.out.printf( "Release(s):\n" );
         System.out.printf( "    Actual Test version: %s\n",  version.getDecodedVersion() );
         System.out.printf( "    GivenCode version:   %s\n",  GivenCodeVersion.getDecodedVersion() );
         System.out.printf( "\n\n" );
