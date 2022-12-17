@@ -98,6 +98,10 @@ public class UnitTestProposal {
     
     
     
+    /**
+     * testForCrashingThreadsDuringStartAndShutDown() prüft nur, ob Threads abstürzen.
+     * Es wird NICHT geprüft, ob die Datenübergabe von den Makern zu den Usern klappt.
+     */
     @Test
     public void testForCrashingThreadsDuringStartAndShutDown(){
         final String testName = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -108,6 +112,7 @@ public class UnitTestProposal {
                 public void execute() throws Throwable {
                     //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     // start of actual test
+                    
                     
                     // print header - REMENBER, JUnit tests shall NOT print on screen
                     final StringBuilder sb = new StringBuilder();
@@ -128,7 +133,7 @@ public class UnitTestProposal {
                         public void uncaughtException( Thread t, Throwable ex ){
                             threadCrashCount.incrementAndGet();
                             Herald.proclaimError( String.format(
-                                "###\n### [%s] -> %s: %s at line %d of %s\n###\n",
+                                "###\n###\n### [%s] -> %s: %s at line %d of %s\n###\n",
                                 SimpleUncaughtExceptionHandler.class.getSimpleName(),
                                 t.getName(),
                                 ex,
@@ -175,7 +180,7 @@ public class UnitTestProposal {
                             maker[i].join();
                         }//for
                         for( int i=0; i<numberOfUsers; i++ ){
-                            bm.insert( -1L );                                   // <- white box test :  insert death pill
+                            bm.insert( -1L );                                   // <- white box test :  insert death pill, provided that -1 is a death pill
                         }//for
                         for( int i=0; i<numberOfUsers; i++ ){
                             user[i].join();
@@ -188,6 +193,7 @@ public class UnitTestProposal {
                     
                     final int numberOfCrashedThreads = threadCrashCount.get();
                     assertEquals( 0, numberOfCrashedThreads,  String.format( "#%d threads have crashed", numberOfCrashedThreads ));
+                    
                     
                     // end of actual test
                     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -210,6 +216,7 @@ public class UnitTestProposal {
                     //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                     // start of actual test
                     
+                    
                     // print header - REMENBER, JUnit tests shall NOT print on screen
                     final StringBuilder sb = new StringBuilder();
                     sb.append( "\n\n" );
@@ -219,6 +226,7 @@ public class UnitTestProposal {
                     Herald.proclaimMessage( sb );
                     
                     // ... actually, there is nothing is tested currently - it's your job to implement test;-)
+                    
                     
                     // end of actual test
                     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
