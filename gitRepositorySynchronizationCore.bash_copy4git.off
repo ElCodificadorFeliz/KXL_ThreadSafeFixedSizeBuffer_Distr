@@ -19,10 +19,12 @@
 # 16/04/28  v3.0.2  by ShfM niceties
 # 16/05/25  v3.0.3  by ShfM niceties
 # 16/05/29  v3.0.4  by ShfM niceties
+# 23/05/02  v3.0.5  by ShfM #128: You have divergent branches and need to specify how to reconcile them...
+# 23/05/05  v3.0.6  by ShfM #128: fatal: Need to specify how to reconcile divergent branches.
 #
 # status : still under (never ending) development
 
-tmpGitRepositorySynchronizationCoreBashVersion="v3.0.4 160529"
+tmpGitRepositorySynchronizationCoreBashVersion="v3.0.6 230505"
 
 
 
@@ -54,22 +56,26 @@ tmpLocalExpectedVersion=$( cat /c/X/GIT/VERSION_CONTROL_SYNCHRONIZE_SCRIPT/gitRe
 echo ${0##*/} ${tmpGitRepositorySynchronizationCoreBashVersion}
 #
 if [ "${tmpLocalExpectedVersion}"  !=  "${tmpGitRepositorySynchronizationCoreBashVersion}" ] ; then
+    #    vv! ---red---............................................................................................................normal
     echo -e "\e[01;31mcheck version: \"${tmpLocalExpectedVersion}\" was expected for gitRepositorySynchronizationCore bash script.\e[00m"
     #    ^^! ---red---............................................................................................................normal
     exit -1
 fi
+#    vv! ---gray--.............................................................................normal
 echo -e "\e[01;30m-----------------------------------------------------------------------------\e[00m"
 #    ^^! ---gray--.............................................................................normal
 
 # identify GIT version
 #~~~~~~~~~~~~~~~~~~~~~
 git  --version
+#    vv! ---gray--.............................................................................normal
 echo -e "\e[01;30m-----------------------------------------------------------------------------\e[00m"
 #    ^^! ---gray--.............................................................................normal
 
 # identify bash version
 #~~~~~~~~~~~~~~~~~~~~~~
 bash --version
+#    vv! ---gray--.............................................................................normal
 echo -e "\e[01;30m-----------------------------------------------------------------------------\e[00m"
 #    ^^! ---gray--.............................................................................normal
 
@@ -86,6 +92,7 @@ echo -e "\e[01;30m--------------------------------------------------------------
 # 2: name of development branch
 # 3: synchonize message
 if [ ${#} -ne 3 ] ; then
+    #    vv! ---red---....................................normal
     echo -e "\e[01;31mERROR: false parameter count -> ${#}\e[00m"
     #    ^^! ---red---....................................normal
     exit -1
@@ -99,25 +106,27 @@ tmpLocalExpectedPath="${1}"
 tmpLocalExpectedDevelopmentBranchName="${2}"
 synchronizationMessage="${3}"
 #
+#    vv! --brown--..........................................normal
 echo -e "\e[00;33mexpected place:    ${tmpLocalExpectedPath}\e[00m"
-#    ^^! --brown--..........................................normal
 echo -e "\e[00;33mexpected branch:   ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
-#    ^^! --brown--...........................................................normal
 echo -e "\e[00;33mcommand :          synchronize  ${synchronizationMessage}\e[00m"
 #    ^^! --brown--.........................................................normal
 #
+#    vv! --brown--................normal
 echo -e "\e[00;33mjust checking...\e[00m"
 #    ^^! --brown--................normal
 
 # do some checks
 #~~~~~~~~~~~~~~~
 if [ "${PWD}" != "${tmpLocalExpectedPath}" ] ; then
+    #    vv! ---red---..............................................................normal
     echo -e "\e[01;31mERROR: NOT at expected place  (not at ${tmpLocalExpectedPath})\e[00m"
     #    ^^! ---red---..............................................................normal
     exit -1
 fi
 #
 if [ ! -e .git ] ; then
+    #    vv! ---red---............................................normal
     echo -e "\e[01;31mERROR: check current path - there is NO .git\e[00m"
     #    ^^! ---red---............................................normal
     exit -1
@@ -132,12 +141,14 @@ tmpLocalBranchName=${tmpLocalBranchName##refs/heads/}
 tmpLocalBranchName=${tmpLocalBranchName:-HEAD}
 #
 if [ ${tmpLocalBranchName} != ${tmpLocalExpectedDevelopmentBranchName} ] ; then
+    #    vv! ---red---.......................................................................................--yellow-........................................---red---...............normal
     echo -e "\e[01;31mERROR: you have to be on the (right) development branch - but you are NOT -> branch: \"\e[01;33m${tmpLocalExpectedDevelopmentBranchName}\e[01;31m\" was expected\e[00m"
     #    ^^! ---red---.......................................................................................--yellow-........................................---red---...............normal
     exit -1
 fi
 #
 if [ ${tmpLocalBranchName} == "master" ] ; then
+    #    vv! ---red---.............................................................................normal
     echo -e "\e[01;31mERROR: you have to be on some development branch and NOT on the master branch\e[00m"
     #    ^^! ---red---.............................................................................normal
     exit -1
@@ -145,8 +156,8 @@ fi
 
 
 
+#    vv! ---gray--.............................................................................normal
 echo -e "\e[01;30m-----------------------------------------------------------------------------\e[00m"
-#    ^^! ---gray--.............................................................................normal
 echo -e "\e[01;32mOK, checks passed => start ACTION\e[00m"
 #    ^^! --green--.................................normal
 echo ""
@@ -164,6 +175,7 @@ echo ""
 # act on DEV branch
 #~~~~~~~~~~~~~~~~~~
 
+            #    vv! ---blue--.............normal
             echo -e "\e[01;34mgit remote -v\e[00m"
             #    ^^! ---blue--.............normal
 git  remote -v    ;  returnCode=${?}
@@ -176,6 +188,7 @@ git  remote -v    ;  returnCode=${?}
                 #    ^^! ---red---............................normal
                 #
                 # (re)act wise and clever - but how?
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -184,6 +197,7 @@ git  remote -v    ;  returnCode=${?}
             echo ""
 
 
+            #    vv! ---blue--.......................normal
             echo -e "\e[01;34mgit status -u --ignored\e[00m"
             #    ^^! ---blue--.......................normal
 git  status -u --ignored    ;  returnCode=${?}
@@ -196,6 +210,7 @@ git  status -u --ignored    ;  returnCode=${?}
                 #    ^^! ---red---............................normal
                 #
                 # (re)act wise and clever - but how?
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -204,6 +219,7 @@ git  status -u --ignored    ;  returnCode=${?}
             echo ""
 
 
+            #    vv! ---blue--..........---dark--....................................normal
             echo -e "\e[01;34mgit add -A\e[01;30m           # resp.     git add --all\e[00m"
             #    ^^! ---blue--..........---dark--....................................normal
 git  add  -A    ;  returnCode=${?}
@@ -216,6 +232,7 @@ git  add  -A    ;  returnCode=${?}
                 #    ^^! ---red---............................normal
                 #
                 # (re)act wise and clever - but how?
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -224,6 +241,7 @@ git  add  -A    ;  returnCode=${?}
             echo ""
 
 
+            #    vv! ---blue--...........................................normal
             echo -e "\e[01;34mgit commit -m \"${synchronizationMessage}\"\e[00m"
             #    ^^! ---blue--...........................................normal
 git  commit  -m "${synchronizationMessage}"    ;  returnCode=${?}
@@ -233,9 +251,11 @@ git  commit  -m "${synchronizationMessage}"    ;  returnCode=${?}
                     # OK -> NO (re)actions required
                     ;;
                 1)
+                    #    vv! drkYellow....................................normal
                     echo -e "\e[00;33mreceived return code : ${returnCode}\e[00m"
                     echo -e "\e[00;33mEXPECTING reason was : \"nothing to commit, working directory clean\"\e[00m"
                     echo -e "\e[00;33mCONTINUING(!)\e[00m"
+                    #    ^^! drkYellow.............normal
                     # NO(!) exit                                            _???_<150403>
                     ;;
                 *)
@@ -246,6 +266,7 @@ git  commit  -m "${synchronizationMessage}"    ;  returnCode=${?}
                     #    ^^! ---red---............................normal
                     #
                     # (re)act wise and clever - but how?
+                    #    vv! --yellow-.......................normal
                     echo -e "\e[01;33m(re)act wise and clever\e[00m"
                     #    ^^! --yellow-.......................normal
                     exit -1
@@ -261,6 +282,7 @@ git  commit  -m "${synchronizationMessage}"    ;  returnCode=${?}
 # act on MASTER branch
 #~~~~~~~~~~~~~~~~~~~~~
 
+            #    vv! ---blue--...................normal
             echo -e "\e[01;34mgit checkout master\e[00m"
             #    ^^! ---blue--...................normal
 git  checkout  master    ;  returnCode=${?}
@@ -273,6 +295,7 @@ git  checkout  master    ;  returnCode=${?}
                 #    ^^! ---red---............................normal
                 #
                 # (re)act wise and clever - but how?
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -281,52 +304,113 @@ git  checkout  master    ;  returnCode=${?}
             echo ""
 
 
+            #    vv! ---blue--.............................normal
             echo -e "\e[01;34mgit pull --tags origin master\e[00m"
-            #    ^^! ---blue--......................normal
+            #    ^^! ---blue--.............................normal
 git  pull  --tags  origin  master    ;  returnCode=${?}
 #================================
-            if [ ${returnCode} -ne 0 ] ; then
-                # problems have occurred
-                #    vv! ---red---........................................normal
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
-                echo -e "\e[01;31mstopping execution of script\e[00m"
-                #    ^^! ---red---............................normal
-                #
-                # (re)act wise and clever - but how?
-                echo -e "\e[01;33m(re)act wise and clever\e[00m"
-                #    ^^! --yellow-.......................normal
-                exit -1
-            fi
+            case ${returnCode} in
+                0)
+                    # OK -> NO (re)actions required
+                    ;;
+                128)
+                    #    vv! --yellow-....................................normal
+                    echo -e "\e[01;33mreceived return code : ${returnCode}\e[00m"
+                    echo -e "\e[01;33mEXPECTING reason was :\e[00m"
+                    echo -e "\e[01;33m    \"hint: You have divergent branches and need to specify how to reconcile them...\"\e[00m"
+                    echo -e "\e[01;33m  or\e[00m"
+                    echo -e "\e[01;33m    \"fatal: Need to specify how to reconcile divergent branches.\"\e[00m"
+                    #hint:   git config pull.rebase false  # merge  <<<<====
+                    #hint:   git config pull.rebase true   # rebase
+                    #hint:   git config pull.ff only       # fast-forward only
+                    echo -e "\e[01;33mstopping execution of script\e[00m"
+                    echo -e "\e[01;33m??? Use -> \"git config pull.rebase false\"  # rebase ???\e[00m"
+                    echo -e "\e[01;33m??? check REPO path ???\e[00m"
+                    #    ^^! --yellow-.......................normal
+                    exit -1
+                    ;;
+                *)
+                    # problems have occurred
+                    #    vv! ---red---........................................normal
+                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                    echo -e "\e[01;31mstopping execution of script\e[00m"
+                    #    ^^! ---red---............................normal
+                    #
+                    # (re)act wise and clever - but how?
+                    #    vv! --yellow-.......................normal
+                    echo -e "\e[01;33m(re)act wise and clever\e[00m"
+                    #    ^^! --yellow-.......................normal
+                    exit -1
+                    ;;
+            esac
             echo ""
             echo ""
 
 
+            #    vv! ---blue--.....................................................................................................normal
             echo -e "\e[01;34mgit merge ${tmpLocalExpectedDevelopmentBranchName}  -m \"${synchronizationMessage} ;  (auto-)merged\"\e[00m"
             #    ^^! ---blue--.....................................................................................................normal
 git  merge  ${tmpLocalExpectedDevelopmentBranchName}  -m "${synchronizationMessage} ;  (auto-)merged"    ;  returnCode=${?}
 #====================================================================================================
-            if [ ${returnCode} -ne 0 ] ; then
-                # problems have occurred
-                #    vv! ---red---........................................normal
-                echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
-                echo -e "\e[01;31mstopping execution of script\e[00m"
-                #    ^^! ---red---............................normal
-                #
-                echo -e "\e[01;36mresolve conflicts and afterwards do:\e[00m"
-                #    ^^! ---cyan--....................................normal
-                #    vv! --yellow-..............---cyan--....................normal
-                echo -e "\e[01;33mgit add\e[00m \e[01;36m<resolved conflicts>\e[00m"
-                echo -e "\e[01;33mgit commit -m \"${synchronizationMessage} ;  merged\"\e[00m"
-                echo -e "\e[01;33mgit push --tags -u origin master\e[00m"
-                echo -e "\e[01;33mgit checkout ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
-                echo -e "\e[01;33mgit merge master\e[00m"
-                #    ^^! --yellow-................normal
-                exit -1
-            fi
+            case ${returnCode} in
+                0)
+                    # OK -> NO (re)actions required
+                    ;;
+                128)
+                    #    vv! ---red---....................................normal
+                    echo -e "\e[01;33mreceived return code : ${returnCode}\e[00m"
+                    echo -e "\e[01;33mEXPECTING reason was : \"fatal: refusing to merge unrelated histories\"\e[00m"
+                    #    ^^! ---red---.......................................................................normal
+                    #
+                    #    vv! --yellow-.......................................normal
+                    echo -e "\e[01;33mcheck situtation for further automation\e[00m"
+                    #    ^^! --yellow-.......................................normal
+                    #
+                    #    vv! ---red---............................normal
+                    echo -e "\e[01;31mstopping execution of script\e[00m"
+                    #    ^^! ---red---............................normal
+                    #
+                    #    vv! ---cyan--....................................normal
+                    echo -e "\e[01;36mresolve conflicts and afterwards do:\e[00m"
+                    #    ^^! ---cyan--....................................normal
+                    #    vv! --yellow-..............---cyan--....................normal
+                    echo -e "\e[01;33mgit add\e[00m \e[01;36m<resolved conflicts>\e[00m"
+                    #    ^^! --yellow-..............---cyan--....................normal
+                    #    vv! --yellow-.....................................................normal
+                    echo -e "\e[01;33mgit commit -m \"${synchronizationMessage} ;  merged\"\e[00m"
+                    echo -e "\e[01;33mgit push --tags -u origin master\e[00m"
+                    echo -e "\e[01;33mgit checkout ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
+                    echo -e "\e[01;33mgit merge master\e[00m"
+                    #    ^^! --yellow-................normal
+                    exit -1
+                    ;;
+                *)
+                    # problems have occurred
+                    #    vv! ---red---........................................normal
+                    echo -e "\e[01;31mPROBLEMs  ->  return code: ${returnCode}\e[00m"
+                    echo -e "\e[01;31mstopping execution of script\e[00m"
+                    #    ^^! ---red---............................normal
+                    #
+                    #    vv! ---cyan--....................................normal
+                    echo -e "\e[01;36mresolve conflicts and afterwards do:\e[00m"
+                    #    ^^! ---cyan--....................................normal
+                    #    vv! --yellow-..............---cyan--....................normal
+                    echo -e "\e[01;33mgit add\e[00m \e[01;36m<resolved conflicts>\e[00m"
+                    #    ^^! --yellow-..............---cyan--....................normal
+                    #    vv! --yellow-.....................................................normal
+                    echo -e "\e[01;33mgit commit -m \"${synchronizationMessage} ;  merged\"\e[00m"
+                    echo -e "\e[01;33mgit push --tags -u origin master\e[00m"
+                    echo -e "\e[01;33mgit checkout ${tmpLocalExpectedDevelopmentBranchName}\e[00m"
+                    echo -e "\e[01;33mgit merge master\e[00m"
+                    #    ^^! --yellow-................normal
+                    exit -1
+                    ;;
+            esac
             echo ""
             echo ""
 
 
+            #    vv! ---blue--..........---dark--....................................normal
             echo -e "\e[01;34mgit add -A\e[01;30m           # resp.     git add --all\e[00m"
             #    ^^! ---blue--..........---dark--....................................normal
 git  add  -A    ;  returnCode=${?}
@@ -339,6 +423,7 @@ git  add  -A    ;  returnCode=${?}
                 #    ^^! ---red---............................normal
                 #
                 # (re)act wise and clever - but how?
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -356,10 +441,12 @@ git  commit  -m "${synchronizationMessage} ;  merged"    ;  returnCode=${?}
                     # OK -> NO (re)actions required
                     ;;
                 1)
+                    #    vv! drkYellow....................................normal
                     echo -e "\e[00;33mreceived return code : ${returnCode}\e[00m"
                     echo -e "\e[00;33mEXPECTING reason was : \"nothing to commit, working directory clean\"\e[00m"
                     echo -e "\e[00;33mCONTINUING(!)\e[00m"
-                    # NO(!) exit                                            _???_<150403> what results in return code 1 ???
+                    #    ^^! drkYellow.............normal
+                    # NO(!) exit                                            _???_<150403> what else might result in return code 1 ???
                     ;;
                 *)
                     # problems have occurred
@@ -369,6 +456,7 @@ git  commit  -m "${synchronizationMessage} ;  merged"    ;  returnCode=${?}
                     #    ^^! ---red---............................normal
                     #
                     # (re)act wise and clever - but how?
+                    #    vv! --yellow-.......................normal
                     echo -e "\e[01;33m(re)act wise and clever\e[00m"
                     #    ^^! --yellow-.......................normal
                     exit -1
@@ -396,6 +484,7 @@ git  push  --tags  -u  origin  master    ;  returnCode=${?}
                 #    ^^! --yellow-................normal                
                 #
                 # (re)act wise and clever - but how?
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -422,6 +511,7 @@ git  checkout  ${tmpLocalExpectedDevelopmentBranchName}    ;  returnCode=${?}
                 #    ^^! ---red---............................normal
                 #
                 # (re)act wise and clever - but how?
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -430,6 +520,7 @@ git  checkout  ${tmpLocalExpectedDevelopmentBranchName}    ;  returnCode=${?}
             echo ""
 
 
+            #    vv! ---blue--................normal
             echo -e "\e[01;34mgit merge master\e[00m"
             #    ^^! ---blue--................normal
 git  merge  master    ;  returnCode=${?}
@@ -443,6 +534,7 @@ git  merge  master    ;  returnCode=${?}
                 #
                 # (re)act wise and clever - but how?
                 #
+                #    vv! --yellow-.......................normal
                 echo -e "\e[01;33m(re)act wise and clever\e[00m"
                 #    ^^! --yellow-.......................normal
                 exit -1
@@ -459,6 +551,7 @@ git  merge  master    ;  returnCode=${?}
 echo ""
 echo ""
 echo ""
+#    vv! --green--...........................normal.................................................................................
 echo -e "\e[01;32mlooks like a successful run\e[00m  resp. END REACHED of ${0##*/} ${tmpGitRepositorySynchronizationCoreBashVersion}"
 #    ^^! --green--...........................normal.................................................................................
 exit 0
